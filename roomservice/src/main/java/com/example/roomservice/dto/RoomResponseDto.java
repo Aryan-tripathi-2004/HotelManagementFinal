@@ -4,6 +4,8 @@ import com.example.roomservice.entity.RoomType;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class RoomResponseDto {
@@ -13,4 +15,6 @@ public class RoomResponseDto {
     private double basicPrice;
     private double firstNightPrice;
     private int capacity;
+    private List<InventoryRequestDto> inventories;
+
 }

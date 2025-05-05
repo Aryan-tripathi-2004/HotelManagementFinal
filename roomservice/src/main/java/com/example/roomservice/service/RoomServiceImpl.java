@@ -83,6 +83,7 @@ public class RoomServiceImpl implements RoomService {
                 .checkOutDate(reservationInputDto.getCheckOutDate())
                 .numberOfChildren(reservationInputDto.getNumberOfChildren())
                 .numberOfAdults(reservationInputDto.getNumberOfAdults())
+                .roomNumber(room.getRoomNumber())
                 .build();
 
         room.getReservations().add(newReservation);
@@ -95,9 +96,13 @@ public class RoomServiceImpl implements RoomService {
         List<Room> availableRooms = new ArrayList<>();
 
         for (Room room : rooms) {
+            if(room.getReservations().size()==0){
+                availableRooms.add(room);
+                continue;
+            }
             boolean isAvailable = room.getReservations().stream()
-                    .noneMatch(reservation ->
-                            !(date.isBefore(reservation.getCheckInDate()) || date.isAfter(reservation.getCheckOutDate()))
+                    .allMatch(reservation ->
+                            date.isBefore(reservation.getCheckInDate()) || date.isAfter(reservation.getCheckOutDate())
                     );
             if (isAvailable) {
                 availableRooms.add(room);

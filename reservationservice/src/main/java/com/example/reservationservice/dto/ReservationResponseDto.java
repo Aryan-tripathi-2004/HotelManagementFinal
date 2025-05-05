@@ -1,5 +1,7 @@
 package com.example.reservationservice.dto;
 
+import com.example.reservationservice.entity.Bill;
+import com.example.reservationservice.entity.Guest;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +17,6 @@ public class ReservationResponseDto {
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
     private String roomNumber;
-    private List<String> guestNames;
-    private String message;
+    private List<Guest> guests;
+    private Bill bill;
 }

@@ -10,11 +10,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "reservations")
 public class Reservation {
     private Long reservationId;
     private int numberOfChildren;
     private int numberOfAdults;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
+    private String roomNumber;
 }

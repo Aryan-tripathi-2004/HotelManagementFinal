@@ -3,6 +3,7 @@ package com.example.roomservice.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,7 +25,12 @@ public class Room {
 
     private int capacity;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Inventory> inventories ;
+
     @ElementCollection
     @CollectionTable(name = "room_reservations", joinColumns = @JoinColumn(name = "roomId"))
     private List<Reservation> reservations;
+
 }
+

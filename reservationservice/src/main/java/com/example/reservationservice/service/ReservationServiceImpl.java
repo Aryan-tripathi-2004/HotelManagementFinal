@@ -9,6 +9,7 @@ import com.example.reservationservice.entity.Reservation;
 import com.example.reservationservice.exception.ResourceNotFoundException;
 import com.example.reservationservice.feign.RoomFeignClient;
 //import com.example.reservationservice.producer.EmailProducer;
+import com.example.reservationservice.repository.BillRepository;
 import com.example.reservationservice.repository.ReservationRepository;
 
 
@@ -31,6 +32,9 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Autowired
     private RoomFeignClient roomFeignClient;
+
+    @Autowired
+    private BillRepository billRepository;
 
 //    @Autowired
 //    private EmailProducer emailProducer;
@@ -55,7 +59,6 @@ public class ReservationServiceImpl implements ReservationService {
         Bill bill = Bill.builder()
                 .billNumber("BILL-" + System.currentTimeMillis())
                 .customerName(requestDto.getGuests().get(0).getName())
-                .date(LocalDateTime.now())
                 .totalAmount(totalAmount)
                 .tax(tax)
                 .finalAmount(finalAmount)
@@ -133,12 +136,8 @@ public class ReservationServiceImpl implements ReservationService {
 
     private ReservationResponseDto mapToResponse(Reservation reservation) {
         ReservationResponseDto response = modelMapper.map(reservation, ReservationResponseDto.class);
-        response.setGuestNames(
-                reservation.getGuests().stream()
-                        .map(Guest::getName)
-                        .collect(Collectors.toList())
-        );
-        response.setMessage("Reservation successful");
+        response.setGuests(reservation.getGuests());
+        response.setBill(reservation.getBill());
         return response;
     }
 }

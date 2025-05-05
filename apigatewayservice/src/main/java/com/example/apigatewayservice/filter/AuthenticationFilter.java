@@ -28,8 +28,12 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
 
     private final Map<String, List<String>> routeRoleMap = Map.of(
             "/api/rooms/available", List.of("OWNER", "MANAGER", "RECEPTIONIST"),
-            "/api/rooms/", List.of("OWNER", "MANAGER"),
-            "/api/reservations/", List.of("OWNER", "RECEPTIONIST")
+            "/api/rooms", List.of("OWNER", "MANAGER"),
+            "/api/reservations", List.of("OWNER", "RECEPTIONIST"),
+            "/api/bills", List.of("OWNER", "RECEPTIONIST"),
+            "/api/guests", List.of("OWNER", "RECEPTIONIST"),
+            "/api/inventories", List.of("OWNER", "RECEPTIONIST"),
+            "/api/reports/", List.of("OWNER")
     );
 
     @Override
@@ -80,7 +84,7 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
                 return allowedRoles.contains(role.toUpperCase());
             }
         }
-        return true; // if route not in map, allow access
+        return false; // if route not in map, allow access
     }
 
 
